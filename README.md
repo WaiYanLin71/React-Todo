@@ -6,7 +6,7 @@ useState\
 useReducer\
 useEffect\
 useContext\
-createPortal\
+createPortal
 
 ## installiation
 
