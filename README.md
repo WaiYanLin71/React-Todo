@@ -10,9 +10,17 @@ useContext,
 ## installiation
 
 ```
+docker compose up
+```
+
+```
+docker compose exec app sh
+```
+
+```
 npm install
 ```
 
 ```
-docker compose up
+npm start
 ```

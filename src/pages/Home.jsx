@@ -90,7 +90,7 @@ const Home = () => {
 			<Container>
 				<div className="row justify-content-center mt-5">
 					<div className="col-md-6">
-						<h2 className="mb-3">Todo Appssa</h2>
+						<h2 className="mb-3">Todo App</h2>
 						<Card>
 							<TodoCreateForm />
 						</Card>
@@ -98,8 +98,8 @@ const Home = () => {
 				</div>
 				<div className="row justify-content-center mt-5">
 					<div className="col-md-6">
-						<h2 className="">Your Task Listsss</h2>
-						<Card card="shadow-sm" cardBody="p-0">
+						<h2 className="">Your Task List</h2>
+						<Card body={["p-0"]}>
 							<table className="table mb-0 table-striped">
 								<thead>
 									<tr>

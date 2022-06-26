@@ -1,9 +1,14 @@
 import React from "react";
+import helper from "../../helper/helper";
 
-const Card = ({ children, card, cardBody }) => {
+const { isArray } = helper;
+
+const Card = ({ children, card = [], body = [] }) => {
 	return (
-		<div className={`card ${card}`}>
-			<div className={`card-body ${cardBody}`}>{children}</div>
+		<div className={["card", isArray(card)].join(" ")}>
+			<div className={["card-body", ...isArray(body)].join(" ")}>
+				{children}
+			</div>
 		</div>
 	);
 };
