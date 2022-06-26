@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+    app:
+        build:
+            context: .
+            dockerfile: ./.docker/Dockerfile
+        container_name: react_container
+        ports:
+            - "3000:3000"
+        stdin_open: true
+        volumes:
+            - ./:/var/www/html
+            - /app/node_modules
+        networks:
+            - default

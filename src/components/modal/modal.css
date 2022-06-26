@@ -1,0 +1,24 @@
+.back-drop {
+    background-color: rgba(0, 0, 0, 0.647);
+    min-height: 100vh;
+    top: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+}
+
+.back-drop .delete-modal {
+    margin-top: 100px;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+}
+
+.back-drop .delete-many-modal {
+    margin-top: 100px;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+}
