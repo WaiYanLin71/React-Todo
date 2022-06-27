@@ -14,16 +14,16 @@ const TodoCreateForm = () => {
 
 	useEffect(() => {
 		let cleaner = setTimeout(() => {
-			let regex = /^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{5,20})$/;
+			let regex = /^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9\s]{5,20})$/;
 
 			if (!regex.test(name) && name.length > 0) {
-				if (name.length > 10) {
+				if (name.length > 20) {
 					setError("The maximun character length is 10.");
 					return;
 				}
 
 				setError(
-					"The character must contains at least one Lowercase letter, Uppercase and Digit."
+					"The character must contains at least one Lowercase letter,one Uppercase letter and one Digit."
 				);
 
 				return;

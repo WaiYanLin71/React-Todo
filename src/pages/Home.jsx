@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect,useState } from "react";
 import TodoCreateForm from "../components/Form/TodoCreateForm";
 import Container from "../components/uility/Container";
 import Card from "../components/uility/Card";
 import Context from "../store/Context";
 import {  getTodo } from "../api/Ajax";
 import TodoEditModal from "../components/modal/TodoEditModal";
+import Pagination from '../components/uility/Pagination'
 
 const Home = () => {
 	const { todos, dispatch } = useContext(Context);
@@ -20,11 +21,10 @@ const Home = () => {
 			});
 	}, []);
 
-	const memo  =useMemo(()=> <TodoEditModal open={editModal} data={editModal}/>,[editModal])
 
 	return (
 		<>
-	 		{memo}
+	 		<TodoEditModal open={editModal} data={editModal}/>
 			<Container>
 				<div className='row justify-content-center mt-5'>
 					<div className='col-md-6'>
@@ -37,7 +37,7 @@ const Home = () => {
 				<div className='row justify-content-center mt-5'>
 					<div className='col-md-6'>
 						<h2 className=''>Your Task List</h2>
-						<Card body={["p-0"]}>
+						<Card body={["p-0"]} cardFooter={<Pagination/>}>
 							<table className='table mb-0 table-striped'>
 								<thead>
 									<tr>
@@ -68,7 +68,7 @@ const Home = () => {
 												</td>
 												<td>
 													<button
-														className='btn btn-warning text-white mx-2'
+														className='btn btn-warning text-white me-2'
 														onClick={(e) => {
 															setEditModal(pre => ({...pre,...todo}))
 														}}
