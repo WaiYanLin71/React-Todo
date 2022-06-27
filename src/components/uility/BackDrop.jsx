@@ -1,8 +1,8 @@
 import React from "react";
 
-const BackDrop = ({ children }) => {
+const BackDrop = ({ children ,onClick}) => {
 	return (
-		<div className='back-drop'>
+		<div className='back-drop' onClick={onClick}>
 			{children}
 		</div>
 	);

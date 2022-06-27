@@ -10,7 +10,6 @@ import { updateTodo } from "../../api/Ajax";
 import Context from "../../store/Context";
 import toast from "react-hot-toast";
 
-
 const CardFooter = ({ open }) => {
 	return (
 		<FormGroup cls={["mt-2", "float-end"]}>
@@ -32,21 +31,29 @@ const CardHeader = () => {
 	return <span className='fw-bold h4'>Task Edit</span>;
 };
 
-const Modal = ({ open,data }) => {
+const Modal = ({ open, data }) => {
 	const { dispatch } = useContext(Context);
-	const  {name,id} = data;
-	const [todo,setTodo] = useState(name)
+	const { name, id } = data;
+	const [todo, setTodo] = useState(name);
+
 	const submit = (e) => {
 		e.preventDefault();
-		updateTodo(id,{name:todo}).then(res => {
-			dispatch({type:'UPDATE',data:res.data.todos})
-			toast.success(res.data.message)
+		updateTodo(id, { name: todo }).then((res) => {
+			dispatch({ type: "UPDATE", data: res.data.todos });
+			toast.success(res.data.message);
 			open(false);
-		})
+		});
+	};
+
+	const removeBackDrop = (e) =>{
+		if(e.target === e.currentTarget){
+			open(false)
+		}
 	}
+
 	return (
-		<BackDrop>
-			<div className='row g-0 justify-content-center mt-5'>
+		<BackDrop onClick={removeBackDrop}>
+			<div className='row g-0 justify-content-center mt-5' onClick={removeBackDrop}>
 				<div className='col-5'>
 					<Form autocomplete='off' onsubmit={submit}>
 						<Card
@@ -56,9 +63,13 @@ const Modal = ({ open,data }) => {
 							cardFooter={<CardFooter open={open} />}
 						>
 							<FormGroup cls={["mt-2"]}>
-								<FloatingInput label='Update Your Task' value={todo} onchange={(e)=>{
-									setTodo(e.target.value)
-								}} />
+								<FloatingInput
+									label='Update Your Task'
+									value={todo}
+									onchange={(e) => {
+										setTodo(e.target.value);
+									}}
+								/>
 							</FormGroup>
 						</Card>
 					</Form>
@@ -68,14 +79,16 @@ const Modal = ({ open,data }) => {
 	);
 };
 
-const TodoEditModal = ({ open,data }) => {
+const TodoEditModal = ({ open, data }) => {
 	const [openModal, setOpenModal] = useState(false);
-	useEffect(()=> {
-		setOpenModal(open)
-	},[open])
+
+	useEffect(() => {
+		setOpenModal(open);
+	}, [open]);
+
 	if (openModal) {
 		return createPortal(
-			<Modal open={setOpenModal}  data={data}/>,
+			<Modal open={setOpenModal} data={data} />,
 			document.getElementById("modal")
 		);
 	}
