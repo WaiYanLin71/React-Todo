@@ -14,7 +14,7 @@ const TodoCreateForm = () => {
 
 	useEffect(() => {
 		let cleaner = setTimeout(() => {
-			let regex = /^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9])$/;
+			let regex = /^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{5,20})$/;
 
 			if (!regex.test(name) && name.length > 0) {
 				if (name.length > 10) {

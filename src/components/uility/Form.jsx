@@ -2,7 +2,7 @@ import React from "react";
 
 const Form = ({ children, autocomplete = "off", onsubmit }) => {
 	return (
-		<form onSubmit={onsubmit} autocomplete={autocomplete}>
+		<form onSubmit={onsubmit} autoComplete={autocomplete}>
 			{children}
 		</form>
 	);

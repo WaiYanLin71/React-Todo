@@ -8,6 +8,7 @@ const FloatingInput = ({
 	type = "text",
 	label,
 	error,
+	value,
 	placeholder = "",
 	onchange,
 	cls,
@@ -19,6 +20,7 @@ const FloatingInput = ({
 					className={["form-control", ...isArray(cls)].join(" ")}
 					type={type}
 					id="floatingInput"
+					value={value}
 					placeholder={placeholder}
 					onChange={onchange}
 				/>

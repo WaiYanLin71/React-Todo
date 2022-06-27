@@ -1,27 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import TodoCreateForm from "../components/Form/TodoCreateForm";
 import Container from "../components/uility/Container";
 import Card from "../components/uility/Card";
-import axios from "axios";
 import Context from "../store/Context";
-import DeleteModal from "../components/modal/DeleteModal";
-import { deleteTodo, editTodo, updateTodo } from "../api/Ajax";
-import toast from "react-hot-toast";
-import EditModal from "../components/modal/EditModal";
-import DeleteManyModal from "../components/modal/DeleteManyModal";
+import {  getTodo } from "../api/Ajax";
+import TodoEditModal from "../components/modal/TodoEditModal";
 
 const Home = () => {
 	const { todos, dispatch } = useContext(Context);
-	const [deleteModal, setDeleteModal] = useState(false);
-	const [editModal, setEditModal] = useState(false);
-	const [id, setId] = useState(null);
-	const [editData, setEditData] = useState({});
-	const [idList, setIdList] = useState([]);
-	const [deleteManyModal, setDeleteManyModal] = useState(false);
+	const [editModal, setEditModal] = useState(null);
 
 	useEffect(() => {
-		axios
-			.get("http://127.0.0.1:8000/api/todos")
+		getTodo()
 			.then((res) => {
 				dispatch({ type: "STORE", data: res.data.todos });
 			})
@@ -30,77 +20,25 @@ const Home = () => {
 			});
 	}, []);
 
-	const confimDelete = () => {
-		deleteTodo(id).then((res) => {
-			dispatch({ type: "DELETE", id: res.data.id });
-			toast.success(res.data.message);
-			setId(null);
-			setDeleteModal(false);
-		});
-	};
-
-	const findData = (id) => {
-		editTodo(id)
-			.then((res) => {
-				setEditData(res.data);
-				setEditModal(true);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
-
-	const confirmUpdate = (id, data) => {
-		updateTodo(id, data)
-			.then((res) => {
-				dispatch({ type: "UPDATE", data: res.data.todos });
-				toast.success("Updated Successfully");
-				setEditModal(false);
-			})
-			.catch((error) => {
-				toast.error(error.message);
-			});
-	};
-
-	const hasId = (e) => {
-		if (e.target.checked) {
-			setIdList((pre) => [...pre, Number(e.target.value)]);
-			return;
-		}
-		setIdList((pre) =>
-			pre.filter((id) => Number(id) !== Number(e.target.value))
-		);
-	};
+	const memo  =useMemo(()=> <TodoEditModal open={editModal} data={editModal}/>,[editModal])
 
 	return (
 		<>
-			{deleteManyModal && (
-				<DeleteManyModal modal={setDeleteManyModal} id={idList} />
-			)}
-			{editModal && (
-				<EditModal
-					modal={setEditModal}
-					data={editData}
-					confirm={confirmUpdate}
-				/>
-			)}
-			{deleteModal && (
-				<DeleteModal modal={setDeleteModal} confirm={confimDelete} />
-			)}
+	 		{memo}
 			<Container>
-				<div className="row justify-content-center mt-5">
-					<div className="col-md-6">
-						<h2 className="mb-3">Todo App</h2>
+				<div className='row justify-content-center mt-5'>
+					<div className='col-md-6'>
+						<h2 className='mb-3'>Todo App</h2>
 						<Card>
 							<TodoCreateForm />
 						</Card>
 					</div>
 				</div>
-				<div className="row justify-content-center mt-5">
-					<div className="col-md-6">
-						<h2 className="">Your Task List</h2>
+				<div className='row justify-content-center mt-5'>
+					<div className='col-md-6'>
+						<h2 className=''>Your Task List</h2>
 						<Card body={["p-0"]}>
-							<table className="table mb-0 table-striped">
+							<table className='table mb-0 table-striped'>
 								<thead>
 									<tr>
 										<th></th>
@@ -120,45 +58,28 @@ const Home = () => {
 											>
 												<td>
 													<input
-														type="checkbox"
+														type='checkbox'
 														value={todo.id}
-														onClick={hasId}
 													/>
 												</td>
 												<td>{index + 1}</td>
 												<td>
-													{idList.includes(
-														Number(todo.id)
-													) ? (
-														<strike>
-															{todo.name}
-														</strike>
-													) : (
-														<span>{todo.name}</span>
-													)}
+													<span>{todo.name}</span>
 												</td>
 												<td>
 													<button
-														id={todo.id}
-														className="btn btn-warning text-white mx-2"
+														className='btn btn-warning text-white mx-2'
 														onClick={(e) => {
-															findData(
-																e.target.id
-															);
+															setEditModal(pre => ({...pre,...todo}))
 														}}
 													>
 														Edit
 													</button>
 													<button
 														id={todo.id}
-														className="btn btn-danger"
-														type="button"
-														onClick={(e) => {
-															setDeleteModal(
-																true
-															);
-															setId(e.target.id);
-														}}
+														className='btn btn-danger'
+														type='button'
+														onClick={(e) => {}}
 													>
 														Delete
 													</button>
@@ -168,29 +89,25 @@ const Home = () => {
 									})}
 									{!todos.length && (
 										<tr>
-											<td colSpan="100%">No Data</td>
+											<td colSpan='100%'>No Data</td>
 										</tr>
 									)}
 								</tbody>
-								{idList.length > 0 && (
+								{/* {idList.length > 0 && (
 									<tfoot>
 										<tr>
-											<td colSpan="100%">
+											<td colSpan='100%'>
 												<button
-													className="btn btn-danger w-100"
-													type="button"
-													onClick={() => {
-														setDeleteManyModal(
-															true
-														);
-													}}
+													className='btn btn-danger w-100'
+													type='button'
+													onClick={() => {}}
 												>
 													Delete Checked Task
 												</button>
 											</td>
 										</tr>
 									</tfoot>
-								)}
+								)} */}
 							</table>
 						</Card>
 					</div>

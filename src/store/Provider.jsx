@@ -8,12 +8,15 @@ const Provider = ({ children }) => {
 		switch (action.type) {
 			case Type.STORE:
 				return [...action.data];
+
 			case Type.CREATE:
 				return [...state, action.data];
+
 			case Type.DELETE:
 				return state.filter(
 					(data) => Number(data.id) !== Number(action.id)
 				);
+
 			case Type.UPDATE:
 				return state.map((data) => {
 					if (Number(data.id) === Number(action.data.id)) {
@@ -21,6 +24,7 @@ const Provider = ({ children }) => {
 					}
 					return data;
 				});
+				
 			default:
 				return state;
 		}
